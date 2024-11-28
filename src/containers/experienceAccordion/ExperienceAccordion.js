@@ -1,54 +1,69 @@
-import React, { Component } from "react";
-import ExperienceCard from "../../components/experienceCard/ExperienceCard.js";
+// ExperienceAccordion.js
+import React from "react";
 import "./ExperienceAccordion.css";
+import { experience } from "../../portfolio";
 import { Accordion, Panel } from "baseui/accordion";
+import { DarkTheme, LightTheme, ThemeProvider } from "baseui";
 
-class ExperienceAccordion extends Component {
-  render() {
-    const theme = this.props.theme;
-    return (
-      <div className="experience-accord">
-        <Accordion>
-          {this.props.sections.map((section) => {
-            return (
-              <Panel
-                className="accord-panel"
-                title={section["title"]}
-                key={section["title"]}
-                overrides={{
-                  Header: {
-                    style: () => ({
-                      backgroundColor: `${theme.body}`,
-                      border: `1px solid`,
-                      borderRadius: `5px`,
-                      borderColor: `${theme.headerColor}`,
-                      marginBottom: `3px`,
-                      fontFamily: "Google Sans Regular",
-                      color: `${theme.text}`,
-                      ":hover": {
-                        color: `${theme.secondaryText}`,
-                      },
-                    }),
-                  },
-                  Content: {
-                    style: () => ({
-                      backgroundColor: `${theme.body}`,
-                    }),
-                  },
-                }}
-              >
-{section["experiences"].map((experience,index) => {
-                  return (
-                    <ExperienceCard index={index} totalCards={section["experiences"].length} experience={experience} theme={theme} />
-                  );
-                })}
-              </Panel>
-            );
-          })}
+function ExperienceAccordion(props) {
+  const theme = props.theme;
+
+  return (
+    <div className="experience-accord">
+      <ThemeProvider theme={theme.name === "light" ? LightTheme : DarkTheme}>
+        <Accordion onChange={({ expanded }) => console.log(expanded)}>
+          {experience.experiences.map((exp, i) => (
+            <Panel
+              className="accord-panel"
+              title={exp.title}
+              key={i}
+              overrides={{
+                Header: {
+                  style: () => ({
+                    backgroundColor: `${exp.color_code}`,
+                    color: "white",
+                    borderRadius: "8px",
+                    marginBottom: "10px",
+                    padding: "10px",
+                  }),
+                },
+                Content: {
+                  style: () => ({
+                    backgroundColor:
+                      props.theme.name === "dark" ? "#333" : "white",
+                    color: props.theme.name === "dark" ? "white" : "black",
+                    padding: "20px",
+                  }),
+                },
+              }}
+            >
+              <div className="accord-content">
+                <img
+                  className="accord-image"
+                  src={`/images/${exp.logo_path}`}
+                  alt={exp.alt_name}
+                />
+                <div className="accord-details">
+                  <h5 className="accord-subtitle">{exp.subtitle}</h5>
+                  <p className="accord-description">{exp.description}</p>
+                  {exp.certificate_link && (
+                    <a
+                      href={exp.certificate_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="accord-link"
+                    >
+                      See More
+                    </a>
+                  )}
+                </div>
+              </div>
+            </Panel>
+          ))}
         </Accordion>
-      </div>
-    );
-  }
+      </ThemeProvider>
+    </div>
+  );
 }
 
 export default ExperienceAccordion;

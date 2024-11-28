@@ -25,33 +25,38 @@ class Contact extends Component {
           <Fade bottom duration={1000} distance="40px">
             <div className="contact-heading-div">
               <div className="contact-heading-img-div">
-                <img
-                  src={require(`../../assets/images/${ContactData["profile_image_path"]}`)}
-                  alt=""
-                />
+                {ContactData.profile_image_path && (
+                  <img
+                    src={require(`../../assets/images/${ContactData.profile_image_path}`)}
+                    alt="profil"
+                    className="contact-heading-img"
+                  />
+                )}
               </div>
               <div className="contact-heading-text-div">
                 <h1
                   className="contact-heading-text"
                   style={{ color: theme.text }}
                 >
-                  {ContactData["title"]}
+                  {ContactData.title}
                 </h1>
                 <p
                   className="contact-header-detail-text subTitle"
                   style={{ color: theme.secondaryText }}
                 >
-                  {ContactData["description"]}
+                  {ContactData.description}
                 </p>
                 <SocialMedia theme={theme} />
-                <div className="resume-btn-div">
-                  <Button
-                    text="See My Resume"
-                    newTab={true}
-                    href={greeting.resumeLink}
-                    theme={theme}
-                  />
-                </div>
+                {greeting.resumeLink && (
+                  <div className="resume-btn-div">
+                    <Button
+                      text="See My Resume"
+                      newTab={true}
+                      href={greeting.resumeLink}
+                      theme={theme}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </Fade>
@@ -59,17 +64,17 @@ class Contact extends Component {
             <div className="blog-heading-div">
               <div className="blog-heading-text-div">
                 <h1 className="blog-heading-text" style={{ color: theme.text }}>
-                  {blogSection["title"]}
+                  {blogSection.title}
                 </h1>
                 <p
                   className="blog-header-detail-text subTitle"
                   style={{ color: theme.secondaryText }}
                 >
-                  {blogSection["subtitle"]}
+                  {blogSection.subtitle}
                 </p>
                 <div className="blogsite-btn-div">
                   <Button
-                    text="Visit My Blogsite"
+                    text="YouTube Kanalını Ziyaret Et"
                     newTab={true}
                     href={blogSection.link}
                     theme={theme}
@@ -77,10 +82,6 @@ class Contact extends Component {
                 </div>
               </div>
               <div className="blog-heading-img-div">
-                {/* <img
-											src={require(`../../assets/images/${blogSection["avatar_image_path"]}`)}
-											alt=""
-										/> */}
                 <BlogsImg theme={theme} />
               </div>
             </div>
@@ -88,10 +89,6 @@ class Contact extends Component {
           <Fade bottom duration={1000} distance="40px">
             <div className="address-heading-div">
               <div className="contact-heading-img-div">
-                {/* <img
-											src={require(`../../assets/images/${addressSection["avatar_image_path"]}`)}
-											alt=""
-										/> */}
                 <AddressImg theme={theme} />
               </div>
               <div className="address-heading-text-div">
@@ -99,29 +96,33 @@ class Contact extends Component {
                   className="address-heading-text"
                   style={{ color: theme.text }}
                 >
-                  {addressSection["title"]}
+                  {addressSection.title}
                 </h1>
                 <p
                   className="contact-header-detail-text subTitle"
                   style={{ color: theme.secondaryText }}
                 >
-                  {addressSection["subtitle"]}
+                  {`${addressSection.subtitle}, ${addressSection.locality}, ${addressSection.region}, ${addressSection.country}`}
                 </p>
-                <h1
-                  className="address-heading-text"
-                  style={{ color: theme.text }}
-                >
-                  {phoneSection["title"]}
-                </h1>
-                <p
-                  className="contact-header-detail-text subTitle"
-                  style={{ color: theme.secondaryText }}
-                >
-                  {phoneSection["subtitle"]}
-                </p>
+                {phoneSection.title && (
+                  <>
+                    <h1
+                      className="address-heading-text"
+                      style={{ color: theme.text }}
+                    >
+                      {phoneSection.title}
+                    </h1>
+                    <p
+                      className="contact-header-detail-text subTitle"
+                      style={{ color: theme.secondaryText }}
+                    >
+                      {phoneSection.subtitle}
+                    </p>
+                  </>
+                )}
                 <div className="address-btn-div">
                   <Button
-                    text="Visit on Google Maps"
+                    text="Haritada Gör"
                     newTab={true}
                     href={addressSection.location_map_link}
                     theme={theme}
